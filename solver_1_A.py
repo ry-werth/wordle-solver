@@ -92,52 +92,50 @@ if __name__ == "__main__":
 
     guess_tries = []
     missed_words = []
+    for target in solution_words:
+        accepted_words = solution_words + accepted_words
+        #print(f"There are {len(solution_words)} solution words")
+        #print(f"There are {len(accepted_words)} accepted words")
+        #print("\n")
+        #guess = random.choice(remove_repeat_letter_words(accepted_words))
+        guess = "adieu"
+        #guess = "caret"
+        #print(f"The target word is {target}")
+        #print("\n")
+        #print(f"The random first guess is {guess}")
 
-    accepted_words = solution_words + accepted_words
-    #print(f"There are {len(solution_words)} solution words")
-    #print(f"There are {len(accepted_words)} accepted words")
-    #print("\n")
-    #guess = random.choice(remove_repeat_letter_words(accepted_words))
-    guess = "cares"
-    #['light', 'night', 'might', 'eight', 'wight', 'sight', 'fight', 'right', 'tight']
-    target = "fight"
-    #guess = "caret"
-    #print(f"The target word is {target}")
-    #print("\n")
-    #print(f"The random first guess is {guess}")
+        num_guesses = 1
+        while guess != target and num_guesses < 6:
+            list_dict = check_word(target, guess)
+            filtered_list = filter_word_list(accepted_words, list_dict)
+            num_guesses += 1
+            accepted_words = filtered_list
 
-    num_guesses = 1
-    while guess != target and num_guesses < 7:
-        print(guess)
-        list_dict = check_word(target, guess)
-        filtered_list = filter_word_list(accepted_words, list_dict)
-        num_guesses += 1
-        accepted_words = filtered_list
+            if len(filtered_list) > 10:
+                no_repeats = remove_repeat_letter_words(filtered_list)
+                if len(no_repeats) > 0:
+                    filtered_list = no_repeats
 
-        if len(filtered_list) > 10:
-            no_repeats = remove_repeat_letter_words(filtered_list)
-            if len(no_repeats) > 0:
-                filtered_list = no_repeats
+            try:
+                filtered_tuple = rank_words(filtered_list)
+                guess_tuple = filtered_tuple[-1]
+                score = guess_tuple[0]
+                guess = guess_tuple[1]
+                #print(f"next guess is {guess}")
+            except:
+                print(f"Error with {target} on with the filtered list {filtered_list}")
 
-        try:
-            filtered_tuple = rank_words(filtered_list)
-            guess_tuple = filtered_tuple[-1]
-            score = guess_tuple[0]
-            guess = guess_tuple[1]
-            #print(f"next guess is {guess}")
-        except:
-            print(f"Error with {target} on with the filtered list {filtered_list}")
+        if guess == target:
+            #print(f"Found in {num_guesses} guesses")
+            guess_tries.append(num_guesses)
+        else:
+            missed_words.append(target)
 
-    if guess == target:
-        #print(f"Found in {num_guesses} guesses")
-        guess_tries.append(num_guesses)
-    else:
-        missed_words.append(target)
-        print("Missed")
-
-
-
-
+    print(f"It solved {len(guess_tries)} out of the {len(solution_words)} words")
+    print(f"On average it took {sum(guess_tries)/len(guess_tries)} guesses to solve the word")
+    print("\n")
+    print(f"It could not solve {len(missed_words)} words in time")
+    print(f"The words it could not guess are {missed_words}")
 
 
 
