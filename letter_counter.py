@@ -1,3 +1,8 @@
+"""
+Creates a list of letters A-Z orderd by frequency in the set of words
+Pickles this list for future use
+"""
+
 from words import solution_words, accepted_words
 from collections import defaultdict
 import pickle

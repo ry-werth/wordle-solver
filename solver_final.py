@@ -1,5 +1,6 @@
 """
 The Final Solver
+This solver looks at what letters are in what indexes in the remaining word list to decide its next word
 
 Takes an optional command line argument "-g" as the guess
 The guess must be a valid five letter word

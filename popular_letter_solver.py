@@ -1,7 +1,16 @@
+"""
+This Solver uses letter popularity to rank words
+Words with more common letters will be chosen first
+
+
+Takes an optional command line argument "-g" as the guess
+The guess must be a valid five letter word
+If no guess is given it will choose a random word with no repeat characters
+"""
+
 # import webdriver
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 import time
 import random
 from words import solution_words, accepted_words
@@ -13,7 +22,6 @@ random_word = random.choice(word_list)
 parser = argparse.ArgumentParser(description='Wordle Solver')
 parser.add_argument('-g', '--guess', default=random_word)
 args = parser.parse_args()
-print(args)
 
 guess = args.guess
 

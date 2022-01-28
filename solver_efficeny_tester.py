@@ -1,12 +1,19 @@
 """
-This solver will take a word as an input
-It will then use the "accepted_words" list from words.py to find that word
+This Program will test how efficent the progam is on the list of all target words
 
-It uses letter placement to score words
+Takes an optional command line argument "-g" as the guess
+The guess must be a valid five letter word
+If no guess is given it will choose a random word with no repeat characters
 """
 import random
-
+import argparse
 from words import solution_words, accepted_words
+
+# use the arg parser to overwrite the guess if an initial word is given
+parser = argparse.ArgumentParser(description='Wordle Solver')
+parser.add_argument('-g', '--guess', default=None)
+args = parser.parse_args()
+initial_guess = args.guess
 
 def check_word(target, guess):
     """
@@ -39,8 +46,7 @@ def check_word(target, guess):
         "wrong_letter": wrong_letter
     }
 
-    #print(result_string)
-    #print("\n")
+
     return(list_dict)
 
 
@@ -92,52 +98,45 @@ if __name__ == "__main__":
 
     guess_tries = []
     missed_words = []
+    for target in solution_words:
+        accepted_words = solution_words + accepted_words
+        
+        if initial_guess is None:
+            guess = random.choice(remove_repeat_letter_words(accepted_words))
+        else:
+            guess = initial_guess
 
-    accepted_words = solution_words + accepted_words
-    #print(f"There are {len(solution_words)} solution words")
-    #print(f"There are {len(accepted_words)} accepted words")
-    #print("\n")
-    #guess = random.choice(remove_repeat_letter_words(accepted_words))
-    guess = "cares"
-    #['light', 'night', 'might', 'eight', 'wight', 'sight', 'fight', 'right', 'tight']
-    target = "fight"
-    #guess = "caret"
-    #print(f"The target word is {target}")
-    #print("\n")
-    #print(f"The random first guess is {guess}")
+        num_guesses = 1
+        while guess != target and num_guesses < 6:
+            list_dict = check_word(target, guess)
+            filtered_list = filter_word_list(accepted_words, list_dict)
+            num_guesses += 1
+            accepted_words = filtered_list
 
-    num_guesses = 1
-    while guess != target and num_guesses < 7:
-        print(guess)
-        list_dict = check_word(target, guess)
-        filtered_list = filter_word_list(accepted_words, list_dict)
-        num_guesses += 1
-        accepted_words = filtered_list
+            if len(filtered_list) > 10:
+                no_repeats = remove_repeat_letter_words(filtered_list)
+                if len(no_repeats) > 0:
+                    filtered_list = no_repeats
 
-        if len(filtered_list) > 10:
-            no_repeats = remove_repeat_letter_words(filtered_list)
-            if len(no_repeats) > 0:
-                filtered_list = no_repeats
+            try:
+                filtered_tuple = rank_words(filtered_list)
+                guess_tuple = filtered_tuple[-1]
+                score = guess_tuple[0]
+                guess = guess_tuple[1]
 
-        try:
-            filtered_tuple = rank_words(filtered_list)
-            guess_tuple = filtered_tuple[-1]
-            score = guess_tuple[0]
-            guess = guess_tuple[1]
-            #print(f"next guess is {guess}")
-        except:
-            print(f"Error with {target} on with the filtered list {filtered_list}")
+            except:
+                print(f"Error with {target} on with the filtered list {filtered_list}")
 
-    if guess == target:
-        #print(f"Found in {num_guesses} guesses")
-        guess_tries.append(num_guesses)
-    else:
-        missed_words.append(target)
-        print("Missed")
+        if guess == target:
+            guess_tries.append(num_guesses)
+        else:
+            missed_words.append(target)
 
-
-
-
+    print(f"It solved {len(guess_tries)} out of the {len(solution_words)} words")
+    print(f"On average it took {sum(guess_tries)/len(guess_tries)} guesses to solve the word")
+    print("\n")
+    print(f"It could not solve {len(missed_words)} words in time")
+    print(f"The words it could not guess are {missed_words}")
 
 
 
