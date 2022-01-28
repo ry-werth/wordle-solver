@@ -3,6 +3,13 @@ This notebook contains code to help you beat the word game [Wordle](https://www.
 
 Read my article on this code [here](https://medium.com/p/298d05b7685/edit)
 
+### Selenium
+
+Some of the solvers use [Selenium](https://www.selenium.dev/) to interect with the browser. 
+
+You can read the set up and documentation [here](https://pypi.org/project/selenium/).
+This code requires a Firefox driver which you can download [here](https://github.com/mozilla/geckodriver/releases).
+
 # Set Up
 1. $ `git clone https://github.com/ry-werth/https://github.com/ry-werth/wordle-solver.git.git`     # Cloning project repository
 2. $ `cd wordle-solver`    # Enter to project directory
