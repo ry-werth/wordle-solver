@@ -3,6 +3,11 @@ This solver will takes a target word and initial guess as imports
 It will then walk through the guesses it took to get from guess to the target
 
 It uses letter placement to score words
+
+Takes an optional command line argument "-g" as the guess
+it also takes "-t" to specify the target
+They must be a valid five letter words
+If no guess or target is given it will choose a random word with no repeat characters
 """
 import random
 import argparse
@@ -106,7 +111,7 @@ if __name__ == "__main__":
     if guess is None:
         guess = random.choice(remove_repeat_letter_words(accepted_words))
     if target is None:
-        target = "fight"
+        target = random.choice(accepted_words)
 
     num_guesses = 1
     while guess != target and num_guesses < 6:
