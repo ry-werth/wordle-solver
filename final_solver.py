@@ -1,7 +1,14 @@
+"""
+The Final Solver
+
+Takes an optional command line argument "-g" as the guess
+The guess must be a valid five letter word
+If no guess is given it will choose a random word with no repeat characters
+"""
+
 # import webdriver
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import WebDriverException, UnexpectedAlertPresentException
 import time
 import random
 from words import solution_words, accepted_words
@@ -14,8 +21,9 @@ def remove_repeat_letter_words(word_list):
 word_list_no_repeats = remove_repeat_letter_words(word_list)
 random_word = random.choice(word_list_no_repeats)
 
-previous_length = None
-current_length = len(word_list)
+# initiate word count to track
+previous_word_count = None
+current_word_count = len(word_list)
 
 # use the arg parser to overwrite the guess if an initial word is given
 parser = argparse.ArgumentParser(description='Wordle Solver')
@@ -34,13 +42,13 @@ def filter_word_list(word_list, list_dict):
         word_list_without_letters = [w for w in word_list if l not in w]
         word_list = word_list_without_letters
 
-
+    # filter when letter is in wrong place
     for l_tuple in list_dict["correct_letter"]:
 
         word_list_with_letters = [w for w in word_list if l_tuple[0] in w and l_tuple[0] != w[l_tuple[1]] ]
         word_list = word_list_with_letters
 
-
+    # filter for words with correct letters in correct spot
     for l_tuple in list_dict["correct_spot"]:
         word_list_correct_spot = [w for w in word_list if l_tuple[0] == w[l_tuple[1]] ]
         word_list = word_list_correct_spot
@@ -72,14 +80,16 @@ def expand_shadow_element(element):
     shadow_root = driver.execute_script('return arguments[0].shadowRoot.children', element)
     return shadow_root
 
-
+# function to type the word using selenium
 def type_word(guess, keyboard):
     # loop through each letter in the word and type it on the keyboard element
     for l in guess:
-        keyboard.find_element_by_xpath(f"//button[@data-key='{l}']").click()
+        # keyboard.find_element_by_xpath(f"//button[@data-key='{l}']").click()
+        keyboard.find_element(By.XPATH, f"//button[@data-key='{l}']").click()
 
     # press enter and wait
-    keyboard.find_element_by_xpath(f"//button[@data-key='↵']").click()
+    # keyboard.find_element_by_xpath(f"//button[@data-key='↵']").click()
+    keyboard.find_element(By.XPATH, f"//button[@data-key='↵']").click()
 
 def check_guess(letters):
     """
@@ -148,7 +158,8 @@ if __name__ == "__main__":
 
     # initialize "found word" flag to false
     found_word = False
-
+    print(f"First Guess: {guess}")
+    print("\n")
     for guess_num in range(6):
 
         keyboard = game.find_elements(By.TAG_NAME, "game-keyboard")[0]
@@ -174,10 +185,12 @@ if __name__ == "__main__":
         # set the filtered list as our new word list
         word_list = filtered_list
 
-        previous_length = current_length
-        current_length = len(word_list)
+        previous_word_count = current_word_count
+        current_word_count = len(word_list)
 
-        print(f"{previous_length - current_length} words were eliminated")
+        print(f"{previous_word_count - current_word_count} words were eliminated")
+        print(f"There are {current_word_count} words left")
+        print("\n")
 
         # remove words with repeat letters so we can eliminate more options
         if len(filtered_list) > 10:
@@ -191,7 +204,8 @@ if __name__ == "__main__":
         score = guess_tuple[0]
         guess = guess_tuple[1]
         print(f"next guess: {guess}")
-        print(f"word score: {score}")
+        print(f"word score for {guess}: {score}")
+        print("\n")
 
 
 
