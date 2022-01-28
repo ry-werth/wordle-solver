@@ -3,6 +3,10 @@ This notebook contains code to help you beat the word game [Wordle](https://www.
 
 Read my article on this code [here](https://medium.com/p/298d05b7685/edit)
 
+
+https://user-images.githubusercontent.com/29679635/151480622-7bf6d854-376e-4a9a-bbf5-506f14661e44.mp4
+
+
 ### Selenium
 
 Some of the solvers use [Selenium](https://www.selenium.dev/) to interect with the browser. 
