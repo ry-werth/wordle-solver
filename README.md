@@ -4,12 +4,12 @@ This notebook contains code to help you beat the word game [Wordle](https://www.
 Read my article on this code [here](https://medium.com/p/298d05b7685/edit)
 
 # Set Up
-1. $ git clone https://github.com/ry-werth/https://github.com/ry-werth/wordle-solver.git.git  # Cloning project repository
-2. $ cd wordle-solver # Enter to project directory
-3. $ python3 -m venv my_venv # If not created, creating virtualenv
-4. $ source ./my_venv/bin/activate # Activating virtualenv
-5. (my_venv)$ pip3 install -r ./requirements.txt # Installing dependencies
-6. (my_venv)$ deactivate # When you want to leave virtual environment
+1. $ `git clone https://github.com/ry-werth/https://github.com/ry-werth/wordle-solver.git.git`     # Cloning project repository
+2. $ `cd wordle-solver`    # Enter to project directory
+3. $ `python3 -m venv my_venv`     # If not created, creating virtualenv
+4. $ `source ./my_venv/bin/activate`     # Activating virtualenv
+5. (my_venv)$ `pip3 install -r ./requirements.txt`     # Installing dependencies
+6. (my_venv)$ `deactivate`    # When you want to leave virtual environment
 
 # Solvers
 There are 5 Solvers to explore:
