@@ -15,7 +15,7 @@ You can read the set up and documentation [here](https://pypi.org/project/seleni
 This code requires a Firefox driver which you can download [here](https://github.com/mozilla/geckodriver/releases).
 
 # Set Up
-1. $ `git clone https://github.com/ry-werth/https://github.com/ry-werth/wordle-solver.git.git`     # Cloning project repository
+1. $ `git clone https://github.com/ry-werth/https://github.com/ry-werth/wordle-solver.git`     # Cloning project repository
 2. $ `cd wordle-solver`    # Enter to project directory
 3. $ `python3 -m venv my_venv`     # If not created, creating virtualenv
 4. $ `source ./my_venv/bin/activate`     # Activating virtualenv
