@@ -1,7 +1,7 @@
 # wordle-solver
 This notebook contains code to help you beat the word game [Wordle](https://www.powerlanguage.co.uk/wordle/)
 
-Read my article on this code [here](https://medium.com/p/298d05b7685/edit)
+Read my article on this code [here](https://medium.com/p/298d05b7685/)
 
 
 https://user-images.githubusercontent.com/29679635/151480622-7bf6d854-376e-4a9a-bbf5-506f14661e44.mp4
